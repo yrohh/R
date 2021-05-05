@@ -1,11 +1,11 @@
-# ÆĞÅ°Áö ·Îµå.
+# íŒ¨í‚¤ì§€ ë¡œë“œ.
 # install.packages("XML")
 library("XML")
 library(ggplot2)
 
-# api ¼³Á¤.
-api <-  "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"
-api_key <- "bp%2FEVvOwYRzhKmN0LvTXB4L%2FyVhtA43tAW%2B6X2Je7zBYxQG7a%2BOsHPkpLNRbHGORsAHwvxbu1yQ9COISKEu79A%3D%3D"
+# api ì„¤ì •.
+api <-  "APIí‚¤ ì…ë ¥ ì „ê¹Œì§€ì˜ url ì£¼ì†Œ"
+api_key <- "APIí‚¤"
 returnType <- "xml"
 numOfRows <- 100
 pageNo <- 1
@@ -21,42 +21,46 @@ url
 
 # xml parsing.
 xmlFile <- xmlParse(url)
-# xmlRoot(xmlFile) xml ¹®¼­ È®ÀÎ
-df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # items ³ëµå ³» ¿©·¯ item ³ëµåµéÀ» µ¥ÀÌÅÍ ÇÁ·¹ÀÓÀ¸·Î º¯È¯.
+# xmlRoot(xmlFile) xml ë¬¸ì„œ í™•ì¸
+df <- xmlToDataFrame(getNodeSet(xmlFile, "//items/item")) # items ë…¸ë“œ ë‚´ ì—¬ëŸ¬ item ë…¸ë“œë“¤ì„ ë°ì´í„° í”„ë ˆì„ìœ¼ë¡œ ë³€í™˜.
 View(df)
 df$pm10Value <- as.numeric(df$pm10Value)
 
-# ½Ã°¢È­.
-ggplot(data=df, aes(x=reorder(stationName,pm10Value), y=pm10Value), dpi=300) + # reorder·Î Á¤·Ä.
-  geom_bar(stat="identity", fill="green") + # statÀ¸·Î µ¥ÀÌÅÍÀÇ ¼ıÀÚ Å©±â·Î Ãâ·Â.
-  # theme(axis.text.x=element_text(angle=90)) + # xÃà ´«±İ ¶óº§ È¸Àü°¢µµ.
-  labs(title="¼­¿ï °¢ Áö¿ªÀÇ ¹Ì¼¼¸ÕÁö ³óµµ", x="Áö¿ª", y="³óµµ") + # Ãà ¶óº§°ú Á¦¸ñ º¯°æ.
-  scale_fill_manual(values=rainbow(40)) + # ¹ü·Ê Ãâ·Â ¹× ¸·´ë »ö ÁöÁ¤.
-  coord_flip() # ¸·´ë °¡·Î Ãâ·Â.
+# ì‹œê°í™”.
+ggplot(data=df, aes(x=reorder(stationName,pm10Value), y=pm10Value), dpi=300) + # reorderë¡œ ì •ë ¬.
+  geom_bar(stat="identity", fill="green") + # statìœ¼ë¡œ ë°ì´í„°ì˜ ìˆ«ì í¬ê¸°ë¡œ ì¶œë ¥.
+  # theme(axis.text.x=element_text(angle=90)) + # xì¶• ëˆˆê¸ˆ ë¼ë²¨ íšŒì „ê°ë„.
+  labs(title="ì„œìš¸ ê° ì§€ì—­ì˜ ë¯¸ì„¸ë¨¼ì§€ ë†ë„", x="ì§€ì—­", y="ë†ë„") + # ì¶• ë¼ë²¨ê³¼ ì œëª© ë³€ê²½.
+  scale_fill_manual(values=rainbow(40)) + # ë²”ë¡€ ì¶œë ¥ ë° ë§‰ëŒ€ ìƒ‰ ì§€ì •.
+  coord_flip() # ë§‰ëŒ€ ê°€ë¡œ ì¶œë ¥.
 
 ###
 
-# url »ı¼º_ÆíÀÇ»ó À¥À¸·Î Á÷Á¢ È®ÀÎÇÑ ³»¿ëÀ» °¡Á®¿È.
-url2 <- "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=bp%2FEVvOwYRzhKmN0LvTXB4L%2FyVhtA43tAW%2B6X2Je7zBYxQG7a%2BOsHPkpLNRbHGORsAHwvxbu1yQ9COISKEu79A%3D%3D&returnType=xml&numOfRows=1000&pageNo=1&sidoName=%EC%A0%84%EA%B5%AD&ver=1.0"
+# url ìƒì„±_í¸ì˜ìƒ ì›¹ìœ¼ë¡œ ì§ì ‘ í™•ì¸í•œ ë‚´ìš©ì„ ê°€ì ¸ì˜´.
+url2 <- "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey={APIí‚¤}&returnType=xml&numOfRows=1000&pageNo=1&sidoName=%EC%A0%84%EA%B5%AD&ver=1.0"
 xmlFile2 <- xmlParse(url2)
 df2 <- xmlToDataFrame(getNodeSet(xmlFile2, "//items/item"))
 View(df2)
 str(df2)
 df2$pm25Value <- as.numeric(df2$pm25Value)
+
+# í•œ ì§€ì—­ ë‚´ ì—¬ëŸ¬ ê´€ì¸¡ì†Œê°€ ì¡´ì¬í•˜ë¯€ë¡œ, ì§€ì—­ ê¸°ì¤€ í‰ê· ê°’ êµ¬í•˜ê¸°.
 library(dplyr)
 df2 <- df2 %>% group_by(sidoName) %>%summarise(mean_pm25Value = mean(pm25Value,na.rm=T))
+
+# êµ¬ê¸€ë§µì„ í™œìš©í•œ ì‹œê°í™”.
 library(ggmap)
-register_google(key="AIzaSyATmkSzLIV1P7813YD5a_WOmi_nx7sr9O8")
+register_google(key="êµ¬ê¸€ë§µAPIí‚¤")
 df2$sidoName
-cities <- c('°­¿øµµ','°æ±âµµ','°æ»ó³²µµ','°æ»óºÏµµ','±¤ÁÖ½Ã','´ë±¸½Ã','´ëÀü½Ã','ºÎ»ê½Ã','¼­¿ï½Ã','¼¼Á¾Æ¯º°ÀÚÄ¡½ÃÃ»','¿ï»ê½Ã','ÀÎÃµ½Ã','Àü¶ó³²µµ',
-            'Àü¶óºÏµµ','Á¦ÁÖ½Ã','ÃæÃ»³²µµ','ÃæÃ»ºÏµµ')
+cities <- c('ê°•ì›ë„','ê²½ê¸°ë„','ê²½ìƒë‚¨ë„','ê²½ìƒë¶ë„','ê´‘ì£¼ì‹œ','ëŒ€êµ¬ì‹œ','ëŒ€ì „ì‹œ','ë¶€ì‚°ì‹œ','ì„œìš¸ì‹œ','ì„¸ì¢…íŠ¹ë³„ìì¹˜ì‹œì²­','ìš¸ì‚°ì‹œ','ì¸ì²œì‹œ','ì „ë¼ë‚¨ë„',
+            'ì „ë¼ë¶ë„','ì œì£¼ì‹œ','ì¶©ì²­ë‚¨ë„','ì¶©ì²­ë¶ë„')
 gc <- geocode(enc2utf8(cities))
 gc
 df2 <- cbind(df2,gc)
 df2
 str(df2)
-cen <- as.numeric(geocode(enc2utf8('Àü¶óºÏµµ'))) # Àü¶óºÏµµ¸¦ Áöµµ Áß½É ÁÂÇ¥·Î ¼³Á¤.
-map <- get_googlemap(center=cen, zoom=7, maptype = 'roadmap') # ±¸±Û¸Ê Á¤º¸ »ı¼º.
+cen <- as.numeric(geocode(enc2utf8('ì „ë¼ë¶ë„'))) # ì „ë¼ë¶ë„ë¥¼ ì§€ë„ ì¤‘ì‹¬ ì¢Œí‘œë¡œ ì„¤ì •.
+map <- get_googlemap(center=cen, zoom=7, maptype = 'roadmap') # êµ¬ê¸€ë§µ ì •ë³´ ìƒì„±.
 
 ggmap(map) +
   geom_point(data=df2,
