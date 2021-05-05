@@ -1,4 +1,4 @@
-# ´ÜÀÏ ÆäÀÌÁö ½ºÅ©·¹ÀÌÇÎ
+# ë‹¨ì¼ í˜ì´ì§€ ìŠ¤í¬ë ˆì´í•‘
 
 library(rvest)
 url <- "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&keyword=&detailKeyword=&publicDataPk=&recmSe=&detailText=&relatedKeyword=&commaNotInData=&commaAndData=&commaOrData=&must_not=&tabId=&dataSetCoreTf=&coreDataNm=&sort=&relRadio=&orgFullName=&orgFilter=&org=&orgSearch=&currentPage=1&perPage=10&brm=&instt=&svcType=&kwrdArray=&extsn=&coreDataNmArray=&pblonsipScopeCode="
@@ -20,7 +20,7 @@ desc
 api <- data.frame(title, desc)
 View(api)
 
-# º¹¼ö ÆäÀÌÁö ½ºÅ©·¹ÀÌÇÎ
+# ë³µìˆ˜ í˜ì´ì§€ ìŠ¤í¬ë ˆì´í•‘
 titles <- NULL
 descs <- NULL
 
